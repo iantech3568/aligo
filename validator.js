@@ -20,11 +20,8 @@ function validateDocument() {
 function handlePaste(event) {
     event.preventDefault();
     const pastedText = (event.clipboardData || window.clipboardData).getData('text');
-    if (confirm('Do you want to keep the formatting of the pasted content?')) {
-        insertText(pastedText);
-    } else {
-        insertText(pastedText.replace(/\*\*.*?\*\*/g, '')); // Remove bold formatting
-    }
+    const shouldKeepFormatting = confirm('Do you want to keep the formatting of the pasted content?');
+    insertText(shouldKeepFormatting ? pastedText : pastedText.replace(/\*\*.*?\*\*/g, '')); // Remove bold formatting if not kept
 }
 
 function insertText(text) {
@@ -59,8 +56,6 @@ function formatText(tag) {
     textarea.setSelectionRange(start, start + replacementText.length);
     validateDocument(); // Re-validate after formatting
 }
-
-// Validation functions...
 
 function checkSentenceLength(sentences) {
     const longSentences = sentences.filter(sentence => sentence.split(' ').length > 20).length;
