@@ -73,7 +73,7 @@ function checkReadabilityScore(text, sentences) {
     const words = text.split(/\s+/);
     const syllables = words.reduce((total, word) => total + countSyllables(word), 0);
     const score = 206.835 - 1.015 * (words.length / sentences.length) - 84.6 * (syllables / words.length);
-    updateRequirement('readability-score', score > 60, `Readability score: ${score.toFixed(2)}`);
+    updateRequirement('readability-score', score >= 60, `Readability score: ${score.toFixed(2)}`);
 }
 
 function checkContentLength(text) {
