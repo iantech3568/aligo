@@ -4,7 +4,7 @@ function validateDocument() {
     const text = document.getElementById('document-input').value;
     const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [];
     const paragraphs = text.split('\n').filter(p => p.trim() !== '');
-    const subheadings = text.match(/<h\d>.*?<\/h\d>/g) || [];
+    const subheadings = text.match(/<strong>.*?<\/strong>/g) || [];
 
     checkSentenceLength(sentences);
     checkParagraphLength(paragraphs);
@@ -103,8 +103,7 @@ function formatText(tag) {
     if (tag === 'P') {
         replacementText = `<p>${selectedText}</p>`;
     } else if (tag.startsWith('H')) {
-        const level = tag.replace('H', '');
-        replacementText = `<h${level}>${selectedText}</h${level}>`;
+        replacementText = `<strong>${selectedText}</strong>`;
     }
 
     const newValue = textarea.value.substring(0, start) + replacementText + textarea.value.substring(end);
