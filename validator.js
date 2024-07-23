@@ -41,8 +41,30 @@ function formatText(tag) {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selectedText = textarea.value.substring(start, end);
-
-    const replacementText = `<span class="${tag}">${selectedText}</span>`; // Wrap text with class for heading
+    
+    let replacementText;
+    switch (tag) {
+        case 'heading-1':
+            replacementText = `**${selectedText}**`; // Bold text for heading-1
+            break;
+        case 'heading-2':
+            replacementText = `**${selectedText}**`; // Bold text for heading-2
+            break;
+        case 'heading-3':
+            replacementText = `**${selectedText}**`; // Bold text for heading-3
+            break;
+        case 'heading-4':
+            replacementText = `**${selectedText}**`; // Bold text for heading-4
+            break;
+        case 'heading-5':
+            replacementText = `**${selectedText}**`; // Bold text for heading-5
+            break;
+        case 'heading-6':
+            replacementText = `**${selectedText}**`; // Bold text for heading-6
+            break;
+        default:
+            replacementText = selectedText;
+    }
 
     // Apply the formatting
     const newValue = textarea.value.substring(0, start) + replacementText + textarea.value.substring(end);
@@ -109,7 +131,14 @@ function checkTransitionWords(sentences) {
 }
 
 function checkReadabilityScore(text, sentences) {
-    const readabilityScore = 206.835 - (1.015 * (text.split(' ').length / sentences.length)) - (84.6 * (sentences.join(' ').split(/\s+/).filter(word => word.length <= 3).length / sentences.length));
+    const words = text.split(/\s+/).length;
+    const syllables = text.match(/[aeiouy]+/gi) ? text.match(/[aeiouy]+/gi).length : 0; // Rough syllable count
+    const sentencesCount = sentences.length;
+
+    const ASL = words / sentencesCount;
+    const ASW = syllables / words;
+
+    const readabilityScore = 206.835 - (1.015 * ASL) - (84.6 * ASW);
     updateRequirement('readability-score', readabilityScore >= 60, `Readability Score: ${readabilityScore.toFixed(2)}`);
 }
 
