@@ -1,56 +1,50 @@
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
+    margin: 20px;
     padding: 0;
     background-color: #f4f4f4;
 }
 
 .container {
-    width: 80%;
-    margin: 20px auto;
-    background: #fff;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    font-size: 2em;
-    font-weight: bold;
-    margin-bottom: 20px;
+    text-align: center;
 }
 
 .toolbar {
-    display: flex;
-    justify-content: center;
     margin-bottom: 10px;
 }
 
-.toolbar button {
-    padding: 10px 15px;
+button {
     margin: 0 5px;
-    border: none;
-    background: #007bff;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
+    padding: 5px 10px;
     font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
 }
 
-.toolbar button:hover {
-    background: #0056b3;
+button:hover {
+    background-color: #0056b3;
 }
 
 textarea {
     width: 100%;
-    height: 400px;
+    height: 300px;
     padding: 10px;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    font-size: 16px;
-    resize: vertical;
-    white-space: pre-wrap; /* Preserve whitespace and new lines */
 }
 
 .requirements {
@@ -58,64 +52,21 @@ textarea {
 }
 
 .requirement {
-    padding: 10px;
     margin-bottom: 10px;
+    font-size: 14px;
+    padding: 10px;
     border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
 .requirement.complete {
-    background: #d4edda;
-    border: 1px solid #c3e6cb;
+    border-color: green;
 }
 
 .requirement.incomplete {
-    background: #f8d7da;
-    border: 1px solid #f5c6cb;
+    border-color: red;
 }
 
 .requirement span {
     display: block;
-    font-size: 16px;
-}
-
-.heading-1 {
-    font-size: 2em;
-    font-weight: bold;
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-}
-
-.heading-2 {
-    font-size: 1.75em;
-    font-weight: bold;
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-}
-
-.heading-3 {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-}
-
-.heading-4 {
-    font-size: 1.25em;
-    font-weight: bold;
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-}
-
-.heading-5 {
-    font-size: 1em;
-    font-weight: bold;
-    margin-top: 1em;
-    margin-bottom: 0.5em;
-}
-
-.heading-6 {
-    font-size: 0.875em;
-    font-weight: bold;
-    margin-top: 1em;
-    margin-bottom: 0.5em;
 }
