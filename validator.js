@@ -96,7 +96,8 @@ function checkSubheadingDistribution(paragraphs, subheadings) {
         }
     });
 
-    updateRequirement('subheading-distribution', valid, `No more than 300 words between subheadings`);
+    // Update the requirement status
+    updateRequirement('subheading-distribution', valid, valid ? 'Valid: No more than 300 words between subheadings' : 'Invalid: More than 300 words between subheadings');
 }
 
 function checkConsecutiveSentences(sentences) {
@@ -147,11 +148,6 @@ function checkContentLength(text) {
     updateRequirement('content-length', wordCount >= 400, `Content Length: ${wordCount} words`);
 }
 
-function updateRequirement(id, isValid, message) {
-    const element = document.getElementById(id);
-    element.querySelector('span').textContent = message;
-    element.className = `requirement ${isValid ? 'complete' : 'incomplete'}`;
-}
 function updateRequirement(id, isValid, message) {
     const element = document.getElementById(id);
     element.querySelector('span').textContent = message;
