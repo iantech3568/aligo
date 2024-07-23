@@ -152,3 +152,13 @@ function updateRequirement(id, isValid, message) {
     element.querySelector('span').textContent = message;
     element.className = `requirement ${isValid ? 'complete' : 'incomplete'}`;
 }
+function updateRequirement(id, isValid, message) {
+    const element = document.getElementById(id);
+    element.querySelector('span').textContent = message;
+    
+    if (id === 'subheading-distribution' || id === 'transition-words') {
+        element.style.color = isValid ? 'green' : 'red';
+    }
+    
+    element.className = `requirement ${isValid ? 'complete' : 'incomplete'}`;
+}
