@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Validator</title>
+    <title>Document Validator with Formatting</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Document Validator</h1>
+        <h1>Document Validator with Formatting</h1>
+        <div class="toolbar">
+            <button onclick="formatText('P')">P</button>
+            <button onclick="formatText('H1')">H1</button>
+            <button onclick="formatText('H2')">H2</button>
+            <button onclick="formatText('H3')">H3</button>
+            <button onclick="formatText('H4')">H4</button>
+            <button onclick="formatText('H5')">H5</button>
+            <button onclick="formatText('H6')">H6</button>
+        </div>
         <textarea id="document-input" placeholder="Paste your document here..."></textarea>
         <div id="requirements">
             <div id="sentence-length" class="requirement">
