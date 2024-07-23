@@ -4,30 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Validator</title>
-    <style>
-        .requirement {
-            margin: 10px 0;
-        }
-        .requirement.complete {
-            color: green;
-        }
-        .requirement.incomplete {
-            color: red;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Document Validator</h1>
-    <textarea id="document-input" rows="20" cols="100" placeholder="Paste your document here..."></textarea>
-    <div id="requirements">
-        <div class="requirement" id="sentence-length">Sentence Length: <span></span></div>
-        <div class="requirement" id="paragraph-length">Paragraph Length: <span></span></div>
-        <div class="requirement" id="subheading-distribution">Subheading Distribution: <span></span></div>
-        <div class="requirement" id="consecutive-sentences">Consecutive Sentences with Same Start: <span></span></div>
-        <div class="requirement" id="passive-voice">Passive Voice: <span></span></div>
-        <div class="requirement" id="transition-words">Transition Word Sentences: <span></span></div>
-        <div class="requirement" id="readability-score">Readability Score: <span></span></div>
-        <div class="requirement" id="content-length">Content Length: <span></span></div>
+    <div class="container">
+        <h1>Document Validator</h1>
+        <textarea id="document-input" rows="20" cols="100" placeholder="Paste your document here..."></textarea>
+        <div id="requirements">
+            <div class="requirement" id="sentence-length">Sentence Length: <span></span></div>
+            <div class="requirement" id="paragraph-length">Paragraph Length: <span></span></div>
+            <div class="requirement" id="subheading-distribution">Subheading Distribution: <span></span></div>
+            <div class="requirement" id="consecutive-sentences">Consecutive Sentences with Same Start: <span></span></div>
+            <div class="requirement" id="passive-voice">Passive Voice: <span></span></div>
+            <div class="requirement" id="transition-words">Transition Word Sentences: <span></span></div>
+            <div class="requirement" id="readability-score">Readability Score: <span></span></div>
+            <div class="requirement" id="content-length">Content Length: <span></span></div>
+        </div>
     </div>
     <script src="validator.js"></script>
 </body>
