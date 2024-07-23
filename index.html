@@ -9,6 +9,8 @@
 <body>
     <div class="container">
         <h1>Document Validator with Formatting</h1>
+        
+        <!-- Toolbar for Formatting -->
         <div class="toolbar">
             <button onclick="formatText('P')">P</button>
             <button onclick="formatText('H1')">H1</button>
@@ -18,9 +20,36 @@
             <button onclick="formatText('H5')">H5</button>
             <button onclick="formatText('H6')">H6</button>
         </div>
+        
+        <!-- Textarea for Document Input -->
         <textarea id="document-input" placeholder="Paste your document here..."></textarea>
+        
+        <!-- Validation Results -->
         <div id="requirements">
-            <!-- Validation results will be shown here -->
+            <div id="sentence-length" class="requirement">
+                <span>Sentence Length: Checking...</span>
+            </div>
+            <div id="paragraph-length" class="requirement">
+                <span>Paragraph Length: Checking...</span>
+            </div>
+            <div id="subheading-distribution" class="requirement">
+                <span>Subheading Distribution: Checking...</span>
+            </div>
+            <div id="consecutive-sentences" class="requirement">
+                <span>Consecutive Sentences with Same Start: Checking...</span>
+            </div>
+            <div id="passive-voice" class="requirement">
+                <span>Passive Voice: Checking...</span>
+            </div>
+            <div id="transition-words" class="requirement">
+                <span>Transition Word Sentences: Checking...</span>
+            </div>
+            <div id="readability-score" class="requirement">
+                <span>Readability Score: Checking...</span>
+            </div>
+            <div id="content-length" class="requirement">
+                <span>Content Length: Checking...</span>
+            </div>
         </div>
     </div>
     <script src="validator.js"></script>
