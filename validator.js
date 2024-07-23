@@ -5,7 +5,7 @@ function validateDocument() {
     const text = document.getElementById('document-input').value;
     const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [];
     const paragraphs = text.split('\n').filter(p => p.trim() !== '');
-    const subheadings = text.match(/\*\*.*?\*\*/g) || [];
+    const subheadings = text.match(/(?:^|\s)(\*\*.*?\*\*)(?:\s|$)/g) || [];
 
     checkSentenceLength(sentences);
     checkParagraphLength(paragraphs);
@@ -21,7 +21,7 @@ function handlePaste(event) {
     event.preventDefault();
     const pastedText = (event.clipboardData || window.clipboardData).getData('text');
     const shouldKeepFormatting = confirm('Do you want to keep the formatting of the pasted content?');
-    insertText(shouldKeepFormatting ? pastedText : pastedText.replace(/\*\*.*?\*\*/g, '')); // Remove bold formatting if not kept
+    insertText(shouldKeepFormatting ? pastedText : pastedText.replace(/(?:^|\s)(\*\*.*?\*\*)(?:\s|$)/g, ''));
 }
 
 function insertText(text) {
@@ -42,12 +42,7 @@ function formatText(tag) {
     const end = textarea.selectionEnd;
     const selectedText = textarea.value.substring(start, end);
 
-    let replacementText = '';
-    if (tag === 'P') {
-        replacementText = selectedText;
-    } else if (tag.startsWith('H')) {
-        replacementText = `**${selectedText}**`; // Bold for headings
-    }
+    const replacementText = `<span class="${tag}">${selectedText}</span>`; // Wrap text with class for heading
 
     // Apply the formatting
     const newValue = textarea.value.substring(0, start) + replacementText + textarea.value.substring(end);
@@ -71,65 +66,60 @@ function checkParagraphLength(paragraphs) {
 function checkSubheadingDistribution(paragraphs, subheadings) {
     let wordCount = 0;
     let valid = true;
+
     paragraphs.forEach(paragraph => {
         wordCount += paragraph.split(' ').length;
         if (wordCount > 300) {
             valid = false;
         }
-        if (subheadings.some(subheading => paragraph.includes(subheading))) {
-            wordCount = 0;
-        }
     });
-    updateRequirement('subheading-distribution', valid, `Words between subheadings: ${wordCount}`);
+
+    updateRequirement('subheading-distribution', valid, `No more than 300 words between subheadings`);
 }
 
 function checkConsecutiveSentences(sentences) {
-    let valid = true;
-    for (let i = 0; i < sentences.length - 1; i++) {
-        if (sentences[i].split(' ')[0] === sentences[i + 1].split(' ')[0]) {
-            valid = false;
-            break;
+    let previousStart = '';
+    let consecutiveCount = 0;
+
+    sentences.forEach(sentence => {
+        const start = sentence.trim().split(' ')[0];
+        if (start === previousStart) {
+            consecutiveCount++;
+        } else {
+            consecutiveCount = 0;
         }
-    }
-    updateRequirement('consecutive-sentences', valid, valid ? "No consecutive sentences start with the same word" : "Consecutive sentences start with the same word");
+        previousStart = start;
+    });
+
+    updateRequirement('consecutive-sentences', consecutiveCount <= 1, `No more than 2 consecutive sentences start with the same word`);
 }
 
 function checkPassiveVoice(sentences) {
-    const passiveIndicators = ['is', 'was', 'were', 'been', 'be', 'being', 'by'];
-    const passiveSentences = sentences.filter(sentence => passiveIndicators.some(word => sentence.includes(` ${word} `))).length;
+    const passiveVoicePatterns = /(?:was|were|be|been|being)\s+[a-zA-Z]+ed\b/;
+    const passiveSentences = sentences.filter(sentence => passiveVoicePatterns.test(sentence)).length;
     const percentage = (passiveSentences / sentences.length) * 100;
     updateRequirement('passive-voice', percentage <= 20, `Only ${percentage.toFixed(2)}% of sentences are in passive voice`);
 }
 
 function checkTransitionWords(sentences) {
-    const transitionWords = ['also', 'but', 'moreover', 'however', 'therefore', 'furthermore', 'additionally', 'similarly'];
-    const transitionSentences = sentences.filter(sentence => transitionWords.some(word => sentence.includes(` ${word} `))).length;
+    const transitionWords = ['also', 'but', 'moreover', 'however', 'furthermore'];
+    const transitionSentences = sentences.filter(sentence => transitionWords.some(word => sentence.includes(word))).length;
     const percentage = (transitionSentences / sentences.length) * 100;
-    updateRequirement('transition-words', percentage >= 30, `${percentage.toFixed(2)}% of sentences include transition words`);
+    updateRequirement('transition-words', percentage >= 30, `At least ${percentage.toFixed(2)}% of sentences include transition words`);
 }
 
 function checkReadabilityScore(text, sentences) {
-    const words = text.split(/\s+/);
-    const syllables = words.reduce((total, word) => total + countSyllables(word), 0);
-    const score = 206.835 - 1.015 * (words.length / sentences.length) - 84.6 * (syllables / words.length);
-    updateRequirement('readability-score', score >= 60, `Readability score: ${score.toFixed(2)}`);
+    const readabilityScore = 206.835 - (1.015 * (text.split(' ').length / sentences.length)) - (84.6 * (sentences.join(' ').split(/\s+/).filter(word => word.length <= 3).length / sentences.length));
+    updateRequirement('readability-score', readabilityScore >= 60, `Readability Score: ${readabilityScore.toFixed(2)}`);
 }
 
 function checkContentLength(text) {
-    const wordCount = text.trim().split(/\s+/).length;
-    updateRequirement('content-length', wordCount >= 400, `Content length: ${wordCount} words`);
+    const wordCount = text.split(' ').length;
+    updateRequirement('content-length', wordCount >= 400, `Content Length: ${wordCount} words`);
 }
 
 function updateRequirement(id, isValid, message) {
-    const requirement = document.getElementById(id);
-    requirement.className = `requirement ${isValid ? 'complete' : 'incomplete'}`;
-    requirement.querySelector('span').innerText = message;
-}
-
-function countSyllables(word) {
-    word = word.toLowerCase();                                    
-    if(word.length <= 3) { return 1; }
-    word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, ''); 
-    word = word.replace(/^y/, '');                                
-    return (word.match(/[aeiouy]{1,2}/g) || []).length;                   
+    const element = document.getElementById(id);
+    element.querySelector('span').textContent = message;
+    element.className = `requirement ${isValid ? 'complete' : 'incomplete'}`;
 }
