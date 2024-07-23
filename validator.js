@@ -5,7 +5,7 @@ function validateDocument() {
     const text = document.getElementById('document-input').value;
     const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [];
     const paragraphs = text.split('\n').filter(p => p.trim() !== '');
-    const subheadings = text.match(/(?:^|\s)(\*\*.*?\*\*)(?:\s|$)/g) || [];
+    const subheadings = text.match(/(?:^|\s)(<h[1-6]>.*?<\/h[1-6]>)\s*/g) || [];
 
     checkSentenceLength(sentences);
     checkParagraphLength(paragraphs);
@@ -21,7 +21,7 @@ function handlePaste(event) {
     event.preventDefault();
     const pastedText = (event.clipboardData || window.clipboardData).getData('text');
     const shouldKeepFormatting = confirm('Do you want to keep the formatting of the pasted content?');
-    insertText(shouldKeepFormatting ? pastedText : pastedText.replace(/(?:^|\s)(\*\*.*?\*\*)(?:\s|$)/g, ''));
+    insertText(shouldKeepFormatting ? pastedText : pastedText.replace(/(?:<h[1-6]>.*?<\/h[1-6]>)\s*/g, ''));
 }
 
 function insertText(text) {
@@ -41,26 +41,26 @@ function formatText(tag) {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selectedText = textarea.value.substring(start, end);
-    
+
     let replacementText;
     switch (tag) {
         case 'heading-1':
-            replacementText = `**${selectedText}**`; // Bold text for heading-1
+            replacementText = `<h1>${selectedText}</h1>`;
             break;
         case 'heading-2':
-            replacementText = `**${selectedText}**`; // Bold text for heading-2
+            replacementText = `<h2>${selectedText}</h2>`;
             break;
         case 'heading-3':
-            replacementText = `**${selectedText}**`; // Bold text for heading-3
+            replacementText = `<h3>${selectedText}</h3>`;
             break;
         case 'heading-4':
-            replacementText = `**${selectedText}**`; // Bold text for heading-4
+            replacementText = `<h4>${selectedText}</h4>`;
             break;
         case 'heading-5':
-            replacementText = `**${selectedText}**`; // Bold text for heading-5
+            replacementText = `<h5>${selectedText}</h5>`;
             break;
         case 'heading-6':
-            replacementText = `**${selectedText}**`; // Bold text for heading-6
+            replacementText = `<h6>${selectedText}</h6>`;
             break;
         default:
             replacementText = selectedText;
