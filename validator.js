@@ -5,7 +5,7 @@ function validateDocument() {
     const text = document.getElementById('document-input').value;
     const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [];
     const paragraphs = text.split('\n').filter(p => p.trim() !== '');
-    const subheadings = text.match(/(?:<h[1-6]>.*?<\/h[1-6]>)\s*/g) || [];
+    const subheadings = text.match(/(?:<strong>.*?<\/strong>)\s*/g) || [];
 
     checkSentenceLength(sentences);
     checkParagraphLength(paragraphs);
@@ -21,7 +21,7 @@ function handlePaste(event) {
     event.preventDefault();
     const pastedText = (event.clipboardData || window.clipboardData).getData('text');
     const shouldKeepFormatting = confirm('Do you want to keep the formatting of the pasted content?');
-    insertText(shouldKeepFormatting ? pastedText : pastedText.replace(/(?:<h[1-6]>.*?<\/h[1-6]>)\s*/g, ''));
+    insertText(shouldKeepFormatting ? pastedText : pastedText.replace(/(?:<strong>.*?<\/strong>)\s*/g, ''));
 }
 
 function insertText(text) {
@@ -45,22 +45,22 @@ function formatText(tag) {
     let replacementText;
     switch (tag) {
         case 'heading-1':
-            replacementText = `<h1>${selectedText}</h1>`;
+            replacementText = `<strong>${selectedText}</strong>`;
             break;
         case 'heading-2':
-            replacementText = `<h2>${selectedText}</h2>`;
+            replacementText = `<strong>${selectedText}</strong>`;
             break;
         case 'heading-3':
-            replacementText = `<h3>${selectedText}</h3>`;
+            replacementText = `<strong>${selectedText}</strong>`;
             break;
         case 'heading-4':
-            replacementText = `<h4>${selectedText}</h4>`;
+            replacementText = `<strong>${selectedText}</strong>`;
             break;
         case 'heading-5':
-            replacementText = `<h5>${selectedText}</h5>`;
+            replacementText = `<strong>${selectedText}</strong>`;
             break;
         case 'heading-6':
-            replacementText = `<h6>${selectedText}</h6>`;
+            replacementText = `<strong>${selectedText}</strong>`;
             break;
         default:
             replacementText = selectedText;
