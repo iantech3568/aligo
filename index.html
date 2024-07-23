@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Validator</title>
+    <title>Document Validator and Formatter</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="validator.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Document Validator</h1>
         <div class="toolbar">
             <button onclick="formatText('heading-1')">H1</button>
             <button onclick="formatText('heading-2')">H2</button>
@@ -17,18 +17,33 @@
             <button onclick="formatText('heading-5')">H5</button>
             <button onclick="formatText('heading-6')">H6</button>
         </div>
-        <textarea id="document-input" placeholder="Paste or type your document here..."></textarea>
+        <textarea id="document-input" rows="20" cols="80" placeholder="Paste or type your text here..."></textarea>
         <div class="requirements">
-            <div id="sentence-length" class="requirement">Sentence Length: <span></span></div>
-            <div id="paragraph-length" class="requirement">Paragraph Length: <span></span></div>
-            <div id="subheading-distribution" class="requirement">Subheading Distribution: <span></span></div>
-            <div id="consecutive-sentences" class="requirement">Consecutive Sentences with Same Start: <span></span></div>
-            <div id="passive-voice" class="requirement">Passive Voice: <span></span></div>
-            <div id="transition-words" class="requirement">Transition Word Sentences: <span></span></div>
-            <div id="readability-score" class="requirement">Readability Score: <span></span></div>
-            <div id="content-length" class="requirement">Content Length: <span></span></div>
+            <div id="sentence-length" class="requirement">
+                <span>Sentence Length: Not evaluated</span>
+            </div>
+            <div id="paragraph-length" class="requirement">
+                <span>Paragraph Length: Not evaluated</span>
+            </div>
+            <div id="subheading-distribution" class="requirement">
+                <span>Subheading Distribution: Not evaluated</span>
+            </div>
+            <div id="consecutive-sentences" class="requirement">
+                <span>Consecutive Sentences with Same Start: Not evaluated</span>
+            </div>
+            <div id="passive-voice" class="requirement">
+                <span>Passive Voice: Not evaluated</span>
+            </div>
+            <div id="transition-words" class="requirement">
+                <span>Transition Word Sentences: Not evaluated</span>
+            </div>
+            <div id="readability-score" class="requirement">
+                <span>Readability Score: Not evaluated</span>
+            </div>
+            <div id="content-length" class="requirement">
+                <span>Content Length: Not evaluated</span>
+            </div>
         </div>
     </div>
-    <script src="validator.js"></script>
 </body>
 </html>
