@@ -61,10 +61,12 @@ textarea {
 
 .requirement.complete {
     border-color: green;
+    color: green;
 }
 
 .requirement.incomplete {
     border-color: red;
+    color: red;
 }
 
 .requirement span {
