@@ -107,6 +107,7 @@ function formatText(tag) {
             replacementText = `<strong>${selectedText}</strong>`;
         }
 
+        // Apply the formatting
         const newValue = textarea.value.substring(0, start) + replacementText + textarea.value.substring(end);
         textarea.value = newValue;
         textarea.focus();
