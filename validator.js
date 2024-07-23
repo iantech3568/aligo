@@ -5,7 +5,7 @@ function validateDocument() {
     const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [];
     const paragraphs = text.split('\n').filter(p => p.trim() !== '');
     const subheadings = text.match(/<h\d>.*?<\/h\d>/g) || [];
-    
+
     checkSentenceLength(sentences);
     checkParagraphLength(paragraphs);
     checkSubheadingDistribution(paragraphs, subheadings);
@@ -14,7 +14,6 @@ function validateDocument() {
     checkTransitionWords(sentences);
     checkReadabilityScore(text);
     checkContentLength(text);
-    checkIntroLength(paragraphs[0]);
 }
 
 function checkSentenceLength(sentences) {
@@ -45,9 +44,8 @@ function checkSubheadingDistribution(paragraphs, subheadings) {
 
 function checkConsecutiveSentences(sentences) {
     let valid = true;
-    for (let i = 0; i < sentences.length - 2; i++) {
-        if (sentences[i].split(' ')[0] === sentences[i + 1].split(' ')[0] &&
-            sentences[i + 1].split(' ')[0] === sentences[i + 2].split(' ')[0]) {
+    for (let i = 0; i < sentences.length - 1; i++) {
+        if (sentences[i].split(' ')[0] === sentences[i + 1].split(' ')[0]) {
             valid = false;
             break;
         }
@@ -82,12 +80,6 @@ function checkReadabilityScore(text) {
 function checkContentLength(text) {
     const wordCount = text.split(' ').length;
     updateRequirement('content-length', wordCount >= 400, `Content length: ${wordCount} words`);
-}
-
-function checkIntroLength(intro) {
-    const sentences = intro.match(/[^\.!\?]+[\.!\?]+/g) || [];
-    const valid = sentences.length >= 3 && sentences.length <= 4;
-    updateRequirement('intro-length', valid, `Introduction has ${sentences.length} sentences`);
 }
 
 function updateRequirement(id, isValid, message) {
