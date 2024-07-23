@@ -94,3 +94,23 @@ function countSyllables(word) {
     word = word.replace(/^y/, '');                                
     return (word.match(/[aeiouy]{1,2}/g) || []).length;                   
 }
+
+function formatText(tag) {
+    const textarea = document.getElementById('document-input');
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = textarea.value.substring(start, end);
+
+    let replacementText = '';
+    if (tag === 'P') {
+        replacementText = `<p>${selectedText}</p>`;
+    } else if (tag.startsWith('H')) {
+        const level = tag.replace('H', '');
+        replacementText = `<h${level}>${selectedText}</h${level}>`;
+    }
+
+    textarea.value = textarea.value.substring(0, start) + replacementText + textarea.value.substring(end);
+    textarea.focus();
+    textarea.setSelectionRange(start, start + replacementText.length);
+    validateDocument(); // Re-validate after formatting
+}
