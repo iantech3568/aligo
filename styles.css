@@ -15,7 +15,9 @@ body {
 }
 
 h1 {
-    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .toolbar {
@@ -74,4 +76,46 @@ textarea {
 .requirement span {
     display: block;
     font-size: 16px;
+}
+
+.heading-1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.heading-2 {
+    font-size: 1.75em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.heading-3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.heading-4 {
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.heading-5 {
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+.heading-6 {
+    font-size: 0.875em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
