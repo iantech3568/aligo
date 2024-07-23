@@ -89,3 +89,14 @@ textarea {
 .requirement span {
     font-weight: 500;
 }
+/* Additional CSS for bold formatting in the textarea */
+textarea {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+strong {
+    font-weight: bold;
+}
+
