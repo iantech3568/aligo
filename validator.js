@@ -12,7 +12,7 @@ function validateDocument() {
     checkConsecutiveSentences(sentences);
     checkPassiveVoice(sentences);
     checkTransitionWords(sentences);
-    checkReadabilityScore(text);
+    checkReadabilityScore(text, sentences);
     checkContentLength(text);
 }
 
@@ -68,17 +68,16 @@ function checkTransitionWords(sentences) {
     updateRequirement('transition-words', percentage >= 30, `${percentage.toFixed(2)}% of sentences include transition words`);
 }
 
-function checkReadabilityScore(text) {
+function checkReadabilityScore(text, sentences) {
     // Note: This is a simplistic readability score using Flesch-Kincaid formula
-    const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [];
-    const words = text.split(' ');
+    const words = text.split(/\s+/);
     const syllables = words.reduce((total, word) => total + countSyllables(word), 0);
     const score = 206.835 - 1.015 * (words.length / sentences.length) - 84.6 * (syllables / words.length);
     updateRequirement('readability-score', score > 60, `Readability score: ${score.toFixed(2)}`);
 }
 
 function checkContentLength(text) {
-    const wordCount = text.split(' ').length;
+    const wordCount = text.trim().split(/\s+/).length;
     updateRequirement('content-length', wordCount >= 400, `Content length: ${wordCount} words`);
 }
 
@@ -93,5 +92,5 @@ function countSyllables(word) {
     if(word.length <= 3) { return 1; }
     word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, ''); 
     word = word.replace(/^y/, '');                                
-    return word.match(/[aeiouy]{1,2}/g).length;                   
+    return (word.match(/[aeiouy]{1,2}/g) || []).length;                   
 }
