@@ -35,15 +35,17 @@ h1 {
     font-size: 16px;
     padding: 10px;
     margin-right: 5px;
-    border: 1px solid #ccc;
+    border: 2px solid #00796b;
     border-radius: 4px;
-    background-color: #f0f0f0;
+    background-color: #004d40;
+    color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 .toolbar button:hover {
-    background-color: #e0e0e0;
+    background-color: #00796b;
+    border-color: #004d40;
 }
 
 textarea {
@@ -51,7 +53,7 @@ textarea {
     height: 500px; /* Set a fixed height for better visibility */
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 2px solid #00796b;
     border-radius: 4px;
     margin-bottom: 20px;
     resize: both; /* Allows resizing both horizontally and vertically */
