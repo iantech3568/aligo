@@ -99,16 +99,18 @@ function formatText(tag) {
     const end = textarea.selectionEnd;
     const selectedText = textarea.value.substring(start, end);
 
-    let replacementText = '';
-    if (tag === 'P') {
-        replacementText = `<p>${selectedText}</p>`;
-    } else if (tag.startsWith('H')) {
-        replacementText = `<strong>${selectedText}</strong>`;
-    }
+    if (confirm('Do you want to apply this formatting?')) {
+        let replacementText = '';
+        if (tag === 'P') {
+            replacementText = `<p>${selectedText}</p>`;
+        } else if (tag.startsWith('H')) {
+            replacementText = `<strong>${selectedText}</strong>`;
+        }
 
-    const newValue = textarea.value.substring(0, start) + replacementText + textarea.value.substring(end);
-    textarea.value = newValue;
-    textarea.focus();
-    textarea.setSelectionRange(start, start + replacementText.length);
-    validateDocument(); // Re-validate after formatting
+        const newValue = textarea.value.substring(0, start) + replacementText + textarea.value.substring(end);
+        textarea.value = newValue;
+        textarea.focus();
+        textarea.setSelectionRange(start, start + replacementText.length);
+        validateDocument(); // Re-validate after formatting
+    }
 }
