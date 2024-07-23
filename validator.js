@@ -5,7 +5,7 @@ function validateDocument() {
     const text = document.getElementById('document-input').value;
     const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [];
     const paragraphs = text.split('\n').filter(p => p.trim() !== '');
-    const subheadings = text.match(/(?:^|\s)(<h[1-6]>.*?<\/h[1-6]>)\s*/g) || [];
+    const subheadings = text.match(/(?:<h[1-6]>.*?<\/h[1-6]>)\s*/g) || [];
 
     checkSentenceLength(sentences);
     checkParagraphLength(paragraphs);
