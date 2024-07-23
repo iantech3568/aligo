@@ -35,7 +35,7 @@ function checkSubheadingDistribution(paragraphs, subheadings) {
         if (wordCount > 300) {
             valid = false;
         }
-        if (subheadings.includes(paragraph)) {
+        if (subheadings.some(subheading => paragraph.includes(subheading))) {
             wordCount = 0;
         }
     });
@@ -54,7 +54,6 @@ function checkConsecutiveSentences(sentences) {
 }
 
 function checkPassiveVoice(sentences) {
-    // Note: This is a simplistic check and might not be very accurate
     const passiveIndicators = ['is', 'was', 'were', 'been', 'be', 'being', 'by'];
     const passiveSentences = sentences.filter(sentence => passiveIndicators.some(word => sentence.includes(` ${word} `))).length;
     const percentage = (passiveSentences / sentences.length) * 100;
@@ -69,7 +68,6 @@ function checkTransitionWords(sentences) {
 }
 
 function checkReadabilityScore(text, sentences) {
-    // Note: This is a simplistic readability score using Flesch-Kincaid formula
     const words = text.split(/\s+/);
     const syllables = words.reduce((total, word) => total + countSyllables(word), 0);
     const score = 206.835 - 1.015 * (words.length / sentences.length) - 84.6 * (syllables / words.length);
@@ -109,7 +107,8 @@ function formatText(tag) {
         replacementText = `<h${level}>${selectedText}</h${level}>`;
     }
 
-    textarea.value = textarea.value.substring(0, start) + replacementText + textarea.value.substring(end);
+    const newValue = textarea.value.substring(0, start) + replacementText + textarea.value.substring(end);
+    textarea.value = newValue;
     textarea.focus();
     textarea.setSelectionRange(start, start + replacementText.length);
     validateDocument(); // Re-validate after formatting
