@@ -48,6 +48,7 @@ textarea {
     box-sizing: border-box;
     font-size: 16px;
     resize: vertical;
+    white-space: pre-wrap; /* Preserve whitespace and new lines */
 }
 
 .requirements {
