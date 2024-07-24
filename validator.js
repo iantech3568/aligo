@@ -191,10 +191,3 @@ function updateRequirement(id, isValid, message) {
     element.classList.toggle('incomplete', !isValid);
     element.querySelector('span').textContent = message;
 }
-
-document.getElementById('format-p').addEventListener('click', () => formatText('p'));
-document.getElementById('format-h2').addEventListener('click', () => formatText('h2'));
-document.getElementById('format-h3').addEventListener('click', () => formatText('h3'));
-document.getElementById('format-h4').addEventListener('click', () => formatText('h4'));
-document.getElementById('format-h5').addEventListener('click', () => formatText('h5'));
-document.getElementById('format-h6').addEventListener('click', () => formatText('h6'));
