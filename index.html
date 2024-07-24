@@ -5,46 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Validator</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="validator.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Document Validator</h1>
         </header>
-        
         <div class="formatting-buttons">
-            <button onclick="formatText('p')">P</button>
-            <button onclick="formatText('h2')">H2</button>
-            <button onclick="formatText('h3')">H3</button>
-            <button onclick="formatText('h4')">H4</button>
-            <button onclick="formatText('h5')">H5</button>
-            <button onclick="formatText('h6')">H6</button>
+            <button id="format-p">P</button>
+            <button id="format-h2">H2</button>
+            <button id="format-h3">H3</button>
+            <button id="format-h4">H4</button>
+            <button id="format-h5">H5</button>
+            <button id="format-h6">H6</button>
         </div>
-
         <textarea id="document-input" placeholder="Paste your document here..."></textarea>
-        
         <div class="requirements">
-            <div id="sentence-length"><span>Sentence Length</span></div>
-            <div id="paragraph-length"><span>Paragraph Length</span></div>
-            <div id="subheading-distribution"><span>Subheading Distribution</span></div>
-            <div id="consecutive-sentences"><span>Consecutive Sentences with Same Start</span></div>
-            <div id="passive-voice"><span>Passive Voice</span></div>
-            <div id="transition-words"><span>Transition Word Sentences</span></div>
-            <div id="readability-score"><span>Readability Score</span></div>
-            <div id="content-length"><span>Content Length</span></div>
-            <div id="introduction-paragraph"><span>Introduction Paragraph Length</span></div>
-            <div id="no-heading-before-intro"><span>No Heading Before Introduction Paragraph</span></div>
-            <div id="h3-under-h2"><span>H3 exists only under H2</span></div>
-            <div id="no-links-first-paragraph"><span>No Links in First Paragraph</span></div>
-            <div id="link-density"><span>Link Density</span></div>
-            <div id="title-tag-h1"><span>Title Tag & H1 Headers</span></div>
+            <div id="sentence-length"><span></span></div>
+            <div id="paragraph-length"><span></span></div>
+            <div id="subheading-distribution"><span></span></div>
+            <div id="consecutive-sentences"><span></span></div>
+            <div id="passive-voice"><span></span></div>
+            <div id="transition-words"><span></span></div>
+            <div id="readability-score"><span></span></div>
+            <div id="content-length"><span></span></div>
+            <div id="introduction-paragraph"><span></span></div>
+            <div id="no-heading-before-intro"><span></span></div>
+            <div id="h3-under-h2"><span></span></div>
+            <div id="no-links-first-paragraph"><span></span></div>
+            <div id="link-density"><span></span></div>
+            <div id="title-tag-h1"><span></span></div>
         </div>
-
         <footer>
-            <p>&copy; 2024 Document Validator. All rights reserved.</p>
+            <p>Document Validator Tool &copy; 2024</p>
         </footer>
     </div>
-
-    <script src="validator.js"></script>
 </body>
 </html>
