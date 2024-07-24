@@ -44,25 +44,25 @@ function formatText(tag) {
 
     let replacementText;
     switch (tag) {
-        case 'heading-1':
+        case 'h1':
             replacementText = `<h1>${selectedText}</h1>`;
             break;
-        case 'heading-2':
+        case 'h2':
             replacementText = `<h2>${selectedText}</h2>`;
             break;
-        case 'heading-3':
+        case 'h3':
             replacementText = `<h3>${selectedText}</h3>`;
             break;
-        case 'heading-4':
+        case 'h4':
             replacementText = `<h4>${selectedText}</h4>`;
             break;
-        case 'heading-5':
+        case 'h5':
             replacementText = `<h5>${selectedText}</h5>`;
             break;
-        case 'heading-6':
+        case 'h6':
             replacementText = `<h6>${selectedText}</h6>`;
             break;
-        case 'paragraph':
+        case 'p':
             replacementText = `<p>${selectedText}</p>`;
             break;
         default:
@@ -90,7 +90,7 @@ function checkParagraphLength(paragraphs) {
 
 function checkSubheadingDistribution(text) {
     const words = text.split(/\s+/).length;
-    const subheadings = (text.match(/<\/?h[1-6]>/g) || []).length;
+    const subheadings = (text.match(/<\/h[1-6]>/g) || []).length;
     const avgWordsBetweenSubheadings = words / (subheadings + 1); // +1 to account for text before the first subheading
     const isValid = avgWordsBetweenSubheadings <= 300;
 
