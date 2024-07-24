@@ -5,11 +5,11 @@ function validateDocument() {
     const text = document.getElementById('document-input').value;
     const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [];
     const paragraphs = text.split('\n').filter(p => p.trim() !== '');
-    const subheadings = text.match(/(?:<h[1-6]>.*?<\/h[1-6]>)\s*/g) || [];
+    const subheadings = text.match(/<\/?h[1-6]>/g) || [];
 
     checkSentenceLength(sentences);
     checkParagraphLength(paragraphs);
-    checkSubheadingDistribution(paragraphs, subheadings);
+    checkSubheadingDistribution(text);
     checkConsecutiveSentences(sentences);
     checkPassiveVoice(sentences);
     checkTransitionWords(sentences);
@@ -88,19 +88,13 @@ function checkParagraphLength(paragraphs) {
     updateRequirement('paragraph-length', longParagraphs === 0, `${longParagraphs} paragraphs are longer than 150 words`);
 }
 
-function checkSubheadingDistribution(paragraphs, subheadings) {
-    let wordCount = 0;
-    let valid = true;
+function checkSubheadingDistribution(text) {
+    const words = text.split(/\s+/).length;
+    const subheadings = (text.match(/<\/?h[1-6]>/g) || []).length;
+    const avgWordsBetweenSubheadings = words / (subheadings + 1); // +1 to account for text before the first subheading
+    const isValid = avgWordsBetweenSubheadings <= 300;
 
-    paragraphs.forEach(paragraph => {
-        wordCount += paragraph.split(' ').length;
-        if (wordCount > 300) {
-            valid = false;
-        }
-    });
-
-    // Update the requirement status
-    updateRequirement('subheading-distribution', valid, valid ? 'Valid: No more than 300 words between subheadings' : 'Invalid: More than 300 words between subheadings');
+    updateRequirement('subheading-distribution', isValid, isValid ? 'Valid: No more than 300 words between subheadings' : 'Invalid: More than 300 words between subheadings');
 }
 
 function checkConsecutiveSentences(sentences) {
@@ -136,28 +130,21 @@ function checkTransitionWords(sentences) {
 
 function checkReadabilityScore(text, sentences) {
     const words = text.split(/\s+/).length;
-    const syllables = text.match(/[aeiouy]+/gi) ? text.match(/[aeiouy]+/gi).length : 0; // Rough syllable count
-    const sentencesCount = sentences.length;
+    const syllables = text.match(/[aeiouy]+/gi) ? text.match(/[aeiouy]+/gi).length : 0;
+    const readability = 206.835 - 1.015 * (words / sentences.length) - 84.6 * (syllables / words);
+    const isValid = readability >= 60;
 
-    const ASL = words / sentencesCount;
-    const ASW = syllables / words;
-
-    const readabilityScore = 206.835 - (1.015 * ASL) - (84.6 * ASW);
-    updateRequirement('readability-score', readabilityScore >= 60, `Readability Score: ${readabilityScore.toFixed(2)}`);
+    updateRequirement('readability-score', isValid, `Readability score is ${readability.toFixed(2)}`);
 }
 
 function checkContentLength(text) {
-    const wordCount = text.split(' ').length;
-    updateRequirement('content-length', wordCount >= 400, `Content Length: ${wordCount} words`);
+    const words = text.split(/\s+/).length;
+    updateRequirement('content-length', words >= 400, `Content length is ${words} words`);
 }
 
-function updateRequirement(id, isValid, message) {
+function updateRequirement(id, isComplete, message) {
     const element = document.getElementById(id);
+    element.classList.toggle('complete', isComplete);
+    element.classList.toggle('incomplete', !isComplete);
     element.querySelector('span').textContent = message;
-    
-    if (id === 'subheading-distribution' || id === 'transition-words') {
-        element.style.color = isValid ? 'green' : 'red';
-    }
-    
-    element.className = `requirement ${isValid ? 'complete' : 'incomplete'}`;
 }
