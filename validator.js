@@ -21,7 +21,7 @@ function handlePaste(event) {
     event.preventDefault();
     const pastedText = (event.clipboardData || window.clipboardData).getData('text');
     const shouldKeepFormatting = confirm('Do you want to keep the formatting of the pasted content?');
-    insertText(shouldKeepFormatting ? pastedText : pastedText.replace(/(?:<h[1-6]>.*?<\/h[1-6]>)\s*/g, ''));
+    insertText(shouldKeepFormatting ? pastedText : pastedText.replace(/<\/?[^>]+(>|$)/g, ""));
 }
 
 function insertText(text) {
