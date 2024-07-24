@@ -125,15 +125,14 @@ function checkTransitionWords(sentences) {
     const transitionWords = ['also', 'but', 'moreover', 'however', 'furthermore'];
     const transitionSentences = sentences.filter(sentence => transitionWords.some(word => sentence.includes(word))).length;
     const percentage = (transitionSentences / sentences.length) * 100;
-    updateRequirement('transition-words', percentage >= 30, `At least ${percentage.toFixed(2)}% of sentences include transition words`);
+    updateRequirement('transition-words', percentage >= 30, `At least ${percentage.toFixed(2)}% of sentences contain a transition word`);
 }
 
 function checkReadabilityScore(text, sentences) {
     const words = text.split(/\s+/).length;
-    const syllables = text.match(/[aeiouy]+/gi) ? text.match(/[aeiouy]+/gi).length : 0;
+    const syllables = text.match(/[aeiouy]{1,2}/gi) ? text.match(/[aeiouy]{1,2}/gi).length : 0;
     const readability = 206.835 - 1.015 * (words / sentences.length) - 84.6 * (syllables / words);
     const isValid = readability >= 60;
-
     updateRequirement('readability-score', isValid, `Readability score is ${readability.toFixed(2)}`);
 }
 
