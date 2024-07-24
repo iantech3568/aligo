@@ -8,27 +8,38 @@
 </head>
 <body>
     <div class="container">
-        <div class="toolbar">
+        <header>
+            <h1>Document Validator</h1>
+        </header>
+        
+        <div class="formatting-buttons">
+            <button onclick="formatText('p')">P</button>
             <button onclick="formatText('h1')">H1</button>
             <button onclick="formatText('h2')">H2</button>
             <button onclick="formatText('h3')">H3</button>
             <button onclick="formatText('h4')">H4</button>
             <button onclick="formatText('h5')">H5</button>
             <button onclick="formatText('h6')">H6</button>
-            <button onclick="formatText('p')">P</button>
         </div>
-        <textarea id="document-input" rows="20" cols="80" placeholder="Paste your document here..."></textarea>
-        <div id="validation-results">
-            <div id="sentence-length" class="requirement">Sentence Length: <span></span></div>
-            <div id="paragraph-length" class="requirement">Paragraph Length: <span></span></div>
-            <div id="subheading-distribution" class="requirement">Subheading Distribution: <span></span></div>
-            <div id="consecutive-sentences" class="requirement">Consecutive Sentences with Same Start: <span></span></div>
-            <div id="passive-voice" class="requirement">Passive Voice: <span></span></div>
-            <div id="transition-words" class="requirement">Transition Word Sentences: <span></span></div>
-            <div id="readability-score" class="requirement">Readability Score: <span></span></div>
-            <div id="content-length" class="requirement">Content Length: <span></span></div>
+
+        <textarea id="document-input" placeholder="Paste your document here..."></textarea>
+        
+        <div class="requirements">
+            <div id="sentence-length"><span>Sentence Length</span></div>
+            <div id="paragraph-length"><span>Paragraph Length</span></div>
+            <div id="subheading-distribution"><span>Subheading Distribution</span></div>
+            <div id="consecutive-sentences"><span>Consecutive Sentences with Same Start</span></div>
+            <div id="passive-voice"><span>Passive Voice</span></div>
+            <div id="transition-words"><span>Transition Word Sentences</span></div>
+            <div id="readability-score"><span>Readability Score</span></div>
+            <div id="content-length"><span>Content Length</span></div>
         </div>
+
+        <footer>
+            <p>&copy; 2024 Document Validator. All rights reserved.</p>
+        </footer>
     </div>
+
     <script src="validator.js"></script>
 </body>
 </html>
