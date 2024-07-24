@@ -5,7 +5,7 @@ function validateDocument() {
     const text = document.getElementById('document-input').value;
     const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [];
     const paragraphs = text.split('\n').filter(p => p.trim() !== '');
-    const subheadings = text.match(/<\/?h[1-6]>/g) || [];
+    const subheadings = text.match(/<\/?h[2-6]>/g) || [];
 
     checkSentenceLength(sentences);
     checkParagraphLength(paragraphs);
@@ -15,6 +15,12 @@ function validateDocument() {
     checkTransitionWords(sentences);
     checkReadabilityScore(text, sentences);
     checkContentLength(text);
+    checkIntroductionParagraph(text);
+    checkNoHeadingBeforeIntro(text);
+    checkH3UnderH2(text);
+    checkNoLinksFirstParagraph(text);
+    checkLinkDensity(text);
+    checkTitleTagH1(text);
 }
 
 function handlePaste(event) {
@@ -44,9 +50,6 @@ function formatText(tag) {
 
     let replacementText;
     switch (tag) {
-        case 'h1':
-            replacementText = `<h1>${selectedText}</h1>`;
-            break;
         case 'h2':
             replacementText = `<h2>${selectedText}</h2>`;
             break;
@@ -90,7 +93,7 @@ function checkParagraphLength(paragraphs) {
 
 function checkSubheadingDistribution(text) {
     const words = text.split(/\s+/).length;
-    const subheadings = (text.match(/<\/h[1-6]>/g) || []).length;
+    const subheadings = (text.match(/<\/h[2-6]>/g) || []).length;
     const avgWordsBetweenSubheadings = words / (subheadings + 1); // +1 to account for text before the first subheading
     const isValid = avgWordsBetweenSubheadings <= 300;
 
@@ -138,12 +141,53 @@ function checkReadabilityScore(text, sentences) {
 
 function checkContentLength(text) {
     const words = text.split(/\s+/).length;
-    updateRequirement('content-length', words >= 400, `Content length is ${words} words`);
+    updateRequirement('content-length', words >= 450, `Content length is ${words} words`);
 }
 
-function updateRequirement(id, isComplete, message) {
+function checkIntroductionParagraph(text) {
+    const paragraphs = text.split('\n').filter(p => p.trim() !== '');
+    const introParagraph = paragraphs[0];
+    const sentences = introParagraph.match(/[^\.!\?]+[\.!\?]+/g) || [];
+    updateRequirement('introduction-paragraph', sentences.length >= 3 && sentences.length <= 4, `Introduction paragraph has ${sentences.length} sentences`);
+}
+
+function checkNoHeadingBeforeIntro(text) {
+    const paragraphs = text.split('\n').filter(p => p.trim() !== '');
+    const introParagraph = paragraphs[0];
+    const hasHeadingBeforeIntro = /<\/h[2-6]>/.test(introParagraph);
+    updateRequirement('no-heading-before-intro', !hasHeadingBeforeIntro, hasHeadingBeforeIntro ? 'Invalid: Heading found before introduction paragraph' : 'Valid: No heading before introduction paragraph');
+}
+
+function checkH3UnderH2(text) {
+    const h2h3Pattern = /<h2>.*?<\/h2>([\s\S]*?<h3>)/;
+    const matches = text.match(h2h3Pattern);
+    const isValid = matches && matches.length > 0;
+    updateRequirement('h3-under-h2', isValid, isValid ? 'Valid: H3 exists only under H2' : 'Invalid: H3 exists without preceding H2');
+}
+
+function checkNoLinksFirstParagraph(text) {
+    const paragraphs = text.split('\n').filter(p => p.trim() !== '');
+    const firstParagraph = paragraphs[0];
+    const hasLink = /<a href=/.test(firstParagraph);
+    updateRequirement('no-links-first-paragraph', !hasLink, hasLink ? 'Invalid: Link found in the first paragraph' : 'Valid: No link in the first paragraph');
+}
+
+function checkLinkDensity(text) {
+    const words = text.split(/\s+/).length;
+    const links = (text.match(/<a href=/g) || []).length;
+    const linkDensity = words / links;
+    updateRequirement('link-density', linkDensity <= 200, `Link density is 1 link per ${linkDensity.toFixed(2)} words`);
+}
+
+function checkTitleTagH1(text) {
+    const h1Tags = (text.match(/<\/?h1>/g) || []).length;
+    const hasTitleTag = document.title.trim().length > 0;
+    updateRequirement('title-tag-h1', h1Tags === 0 && hasTitleTag, h1Tags === 0 ? 'Valid: No H1 tags in the body' : 'Invalid: H1 tags found in the body');
+}
+
+function updateRequirement(id, isValid, message) {
     const element = document.getElementById(id);
-    element.classList.toggle('complete', isComplete);
-    element.classList.toggle('incomplete', !isComplete);
+    element.classList.toggle('complete', isValid);
+    element.classList.toggle('incomplete', !isValid);
     element.querySelector('span').textContent = message;
 }
