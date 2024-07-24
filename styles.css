@@ -1,62 +1,119 @@
-body {
+/* Reset some basic styles */
+body, h1, h2, h3, h4, h5, h6, p, pre, form, textarea, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
 
-.container {
-    width: 80%;
-    margin: auto;
+/* Body styling */
+body {
+    background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
 }
 
-.toolbar {
+/* Container styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Header styling */
+header {
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #333;
+    text-align: center;
+}
+
+/* Formatting buttons styling */
+.formatting-buttons {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.toolbar button {
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #007bff;
+.formatting-buttons button {
+    background-color: #007BFF;
     color: white;
     border: none;
+    padding: 10px 15px;
     border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
-.toolbar button:hover {
+.formatting-buttons button:hover {
     background-color: #0056b3;
 }
 
-#document-input {
+.formatting-buttons button:active {
+    background-color: #003f7f;
+}
+
+/* Textarea styling */
+textarea {
     width: 100%;
     height: 300px;
-    padding: 10px;
-    font-size: 16px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    resize: none;
+    font-size: 1em;
+    line-height: 1.5;
+    resize: vertical;
+    margin-bottom: 20px;
 }
 
-#validation-results {
-    margin-top: 20px;
+/* Validation requirements styling */
+.requirements {
+    margin-bottom: 20px;
 }
 
-.requirement {
-    margin-bottom: 10px;
-    padding: 10px;
+.requirements div {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
     border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1em;
 }
 
-.requirement.complete {
+.requirements div.complete {
     background-color: #d4edda;
     color: #155724;
+    border: 1px solid #c3e6cb;
 }
 
-.requirement.incomplete {
+.requirements div.incomplete {
     background-color: #f8d7da;
     color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.requirements div span {
+    margin-left: 10px;
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ccc;
+}
+
+footer p {
+    font-size: 0.9em;
+    color: #555;
 }
